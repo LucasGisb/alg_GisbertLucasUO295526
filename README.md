@@ -2,11 +2,11 @@
 Repositorio para la asignatura de Algoritmia en el Grado de Ingeniería Informática del Software de la Universidad de Oviedo
 
 ## Información
-**Estudiante**: Juan Ramón Pérez Pérez
+**Estudiante**: Lucas Gisbert Lopez
 
-**Correo**: jrpp@uniovi.es
+**Correo**: uo295526@uniovi.es
 
-**Curso**: 2020-2021
+**Curso**: 2023-2024
 
-**URL del repositorio**: https://github.com/juanrperez/alg_PerezJuanRamonUO22223
+**URL del repositorio**: https://github.com/uo295526/alg_GisbertLucasUO295526
 
