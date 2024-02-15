@@ -1,4 +1,4 @@
-package algestudiante.p0 ;
+package algestudiante.p0;
 
 public class JavaA1v0
 {
@@ -31,4 +31,3 @@ System.out.println ("tiempo = "+(t2-t1)+" milisegundos");
 } // fin de main
 
 } // fin de clase
-

@@ -1,15 +1,3 @@
-/*
-	JAVA es sensible a minúsculas y mayusculas (minúscula != mayúscula)
-	Es norma que una clase comience por letra mayúscula.
-	Los métodos y todo tipo de variables comienzan por minúscula.
-
-	Las clases JAVA se guardan en ficheros con el mismo nombre
-	al que se añade la extensión Nombre.java.
-
-	Los paquetes deben estar en directorio del mismo nombre, esto es,
-	el paquete p11 debe estar en el directorio p11. 
- */
-
 package algestudiante.p11;
 
 import java.util.Random ; //es la clase que genera números aleatorios

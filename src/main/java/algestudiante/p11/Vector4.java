@@ -42,4 +42,4 @@ public static void main (String arg [] )
 
 } // fin de main
 
-} // fin de clase
+}

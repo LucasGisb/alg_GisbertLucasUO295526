@@ -1,3 +1,4 @@
+
 package algestudiante.p11;
 
 /** Esta clase utiliza los métodos estáticos de la clase Vector1.
@@ -13,7 +14,7 @@ public static void main (String arg [] )
 	long t1,t2;
 
 	System.out.println ("Tamaño\tTiempo\tResultado");   
-	for ( int n=10000; n<= 81_920_000; n*=2) // n se va incrementando (*2).  Usamos _ para separar los miles de forma fiable
+	for ( int n=10000; n<= 81920000; n*=2) // n se va incrementando (*2)
 	{
 		System.out.print (n+"\t");
 		v = new int [n] ;

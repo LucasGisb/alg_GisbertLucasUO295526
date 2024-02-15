@@ -22,13 +22,8 @@ public static void main (String arg [] )
 
 	System.out.println ("t1="+t1+"  *** t2="+t2);
 	System.out.println ("Tamaño del problema = "+n+"\t"+"Tiempo método suma = "+(t2-t1));
-	//en este caso, el Tiempo metodo suma sale igual a 0, pues es tan poco que no lo dectecta si quiera
-	//RESPUESTA A PREGUNTA PRACTICA: para que salga algo mas, en el parametro en run configurations puse 50000 (con este sale 1, en el caso de ESTE PROCESADOR (Importante))
-	//En la respuesta, poner a partir de que umbral cambia y cual es el procesador empleado
-	
-	
+
 	System.out.println ("Resultado de la suma de elementos = "+ s);
 } // fin de main
 
 } // fin de clase
-
