@@ -11,18 +11,20 @@ def bucle4 (n):
 
 
 
-def main():
+def main(vec):
     print ("TIEMPO= MILISEGUNDOS")
     t1=0
     t2=0
     n=100
-    cont=0
-    for i in range (10):
+    c=0
+    for i in range (100, 819201):
         t1=time()
-        c=bucle4(n)
+        for j in range(1, vec+1):
+            c=bucle4(n)
         t2=time()
         print("n= ",n,"**tiempo=",int(1000*(t2-t1)),"**contador=",c)
+        i=i*2
         n=n*2
 
 
-main()
+main(100)
