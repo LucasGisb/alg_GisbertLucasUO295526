@@ -12,31 +12,27 @@ public static void main (String arg [])
 {
 long t1,t2;
 String opcion=arg[0];
-int limInf = Integer.parseInt(arg[1]);
-int limSup = Integer.parseInt(arg[2]);
+int k = Integer.parseInt(arg[1]);
 
-	
-for (int n= 250_000; n<=1_000_000_000; n*= 2)
-{
-	v=new int [n];
+int n = 16000000;
 
-   	if (opcion.compareTo("ordenado")==0)
-		Vector.ordenDirecto(v);
-   	else if (opcion.compareTo("inverso")==0)
-		Vector.ordenInverso(v);
-   	else
-		Vector.ordenAleatorio(v);
-		
-  	t1 = System.currentTimeMillis();
-	  
-  	//int[] v2 = copia
-  	
-	InsercionNuevo.insercion(v, limInf, limSup);
+v=new int [n];
 
-         
-	t2 = System.currentTimeMillis();
-
-  	System.out.println (n+"\t"+(t2-t1));
+if (opcion.compareTo("ordenado")==0) {
+	Vector.ordenDirecto(v);
+}else if (opcion.compareTo("inverso")==0) {
+	Vector.ordenInverso(v);
+}else {
+	Vector.ordenAleatorio(v);
 }
+t1 = System.currentTimeMillis();
+
+RapidoInsercion.rapidoInsercion(v, k);
+
+
+t2 = System.currentTimeMillis();
+
+System.out.println (n+"\t"+(t2-t1));
+
 }
 }

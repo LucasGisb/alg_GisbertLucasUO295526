@@ -2,26 +2,45 @@ package algestudiante.p2;
 
 /* Este programa sirve para ordenar n elementos por Hoare */
 
-public class RapidoNuevo
+public class RapidoInsercion
 {
 static int []v;
 
-public static void rapido (int[] v) 
+public static void rapidoInsercion(int[] v, int k) 
 {
-	rapirec(v,0,v.length-1);
+	rapirec(v,0,v.length-1, k);		//k es el tamano minimo para dividr los vectores que nostors decidamos
 }
 
-private static void rapirec (int[] v, int iz, int de) 
+private static void rapirec (int[] v, int iz, int de, int k) 
 {
 	int m;
-	if (de>iz) 			//nueva condicion: tama�o sea k
+	//if (de>iz) 	//Esta es si el tamño es de uno. La nueva condicion: tama�o sea k
+	if(de - iz > k)	//Si el vector "creado" es mayor al tamaño establecido, lo partimos
 	{
 		m=particion(v,iz,de);
-		rapirec(v,iz,m-1);
-		rapirec(v,m+1,de);
+		rapirec(v,iz,m-1, k);		//asi no incluimos al pivote para devolverlo luego
+		rapirec(v,m+1,de, k);		//asi no incluimos al pivote para devolverlo luego
+	}else {	//el vector es igual, o menor, de k, por lo que realizamos ya la insercion
+		insercion(v, iz, de);
 	}
 }
 
+/* Ordenacion por el metodo de Insercion */ 
+public static void insercion (int[] a, int posInf, int posSup) 	//Ahora le pasamos nuevos parametros en funcion de lo que queremos hacer
+{
+	//int n= a.length;
+	for (int i=posInf;i<=posSup;i++) 
+	{
+		int x=a[i];
+		int j=i-1;
+		while (j>=0 && x<a[j])
+		{ 
+			a[j+1]=a[j];
+			j=j-1;
+		}
+		a[j+1]=x;
+	}  // for
+}
 
 /* Intercambia los elementos de las posiciones i, j en el array a
  es O(1)	 */
@@ -61,21 +80,21 @@ public static void main (String arg [] )
 	Vector.ordenDirecto(v);
 	System.out.println ("VECTOR A ORDENAR ES");
 	Vector.escribe(v);	
-	rapido(v);
+	rapidoInsercion(v, 2);
 	System.out.println ("VECTOR ORDENADO ES");
 	Vector.escribe (v);
 
 	Vector.ordenInverso(v);
 	System.out.println ("VECTOR A ORDENAR ES");
 	Vector.escribe(v);	
-	rapido(v);
+	rapidoInsercion(v, 2);
 	System.out.println ("VECTOR ORDENADO ES");
 	Vector.escribe(v);
 
 	Vector.ordenAleatorio(v);
 	System.out.println ("VECTOR A ORDENAR ES");
 	Vector.escribe(v);	
-	rapido(v);
+	rapidoInsercion(v, 2);
 	System.out.println ("VECTOR ORDENADO ES");
 	Vector.escribe(v);
 } // fin de main
