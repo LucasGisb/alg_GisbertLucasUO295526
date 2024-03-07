@@ -6,16 +6,19 @@ public class Sustraccion5
 static long cont;
 
 //Complejidad de este algoritmo: O(3^n/2)					()
-//a=, b=, k= 
+//a=3, b=2, k=1 
 public static void rec5 (int n)
 {
 	if (n<=0) 
 		cont++;
 	else
 	{
-		cont++;   // O(1)    
-		rec5 (n-1);
-		rec5 (n-1);
+		for(int i = 0; i < n; i++) {
+			cont++;   // O(n)    
+		}
+		rec5 (n-2);
+		rec5 (n-2);
+		rec5 (n-2);
 	}
 }
 
@@ -25,13 +28,13 @@ public static void main (String arg [])
 	long t1,t2,cont;
 	int nVeces= Integer.parseInt (arg [0]);
 	 
-	for (int n=20;n<=100;n++)
+	//mejor hacerlo de dos en dos, al llamar menos veces recursivamente puede habe menos errores
+	//for (int n=20;n<=100;n++)
+	for (int n=20;n<=100;n=n+2)
 	{
 		t1 = System.currentTimeMillis ();
 
-		//mejor hacerlo de dos en dos, al llamar menos veces recursivamente puede habe menos errores
-		//for (int repeticiones=1; repeticiones<=nVeces;repeticiones++)
-		for (int repeticiones=1; repeticiones<=nVeces;repeticiones=repeticiones+2)
+		for (int repeticiones=1; repeticiones<=nVeces;repeticiones++)
 		{ 
 			cont=0;
 			rec5 (n);

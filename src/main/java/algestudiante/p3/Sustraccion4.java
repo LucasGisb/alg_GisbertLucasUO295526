@@ -6,16 +6,19 @@ public class Sustraccion4
 static long cont;
 
 //Complejidad de este algoritmo: O(n^3)			()
-//a=, b=, k=
+//a=1, b=2, k=2
 public static void rec4 (int n)
 {
 	if (n<=0) 
 		cont++;
 	else 
 	{ 
-		for (int i=0;i<n;i++) cont++; // O(n)
-		rec4 (n-1);
-		for (int i=0;i<n;i++) cont++; // O(n)
+		for (int i=0;i<n;i++) {
+			for(int j = 0; j < n; j++) {
+				cont++; // O(n^2)
+			}
+		}
+		rec4 (n-2);
 	}
 }
 
@@ -23,7 +26,7 @@ public static void main (String arg [])
 {
 	long t1,t2,cont;
 	int nVeces= Integer.parseInt (arg [0]);
-	for (int n=1000;n<=1024000;n*=2)
+	for (int n=100;n<=1024000;n*=2)
 	{
 
 	t1 = System.currentTimeMillis ();
