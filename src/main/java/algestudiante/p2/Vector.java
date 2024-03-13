@@ -32,7 +32,7 @@ public static void ordenAleatorio (int[]a)
 	Random r= new Random ();
 	int n= a.length;
 	for(int i=0;i<n;i++)
-   		a[i]=r.nextInt(100_000);
+   		a[i]=r.nextInt(10_000_000); //cambiado para mejorar el caso aleatorio de rapido
 		// p.e valores entre 0 y 99999
 }     
 
