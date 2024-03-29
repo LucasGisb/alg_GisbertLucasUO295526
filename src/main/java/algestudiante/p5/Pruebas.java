@@ -26,8 +26,8 @@ public class Pruebas {
 		boolean[][] res3 = a3.resultado;
 		a2.printsTable();
 		*/
-		String texto = "cxxxttcxc";
-		String patron = "***??tc*****xc";
+		String texto = "OVIEDO";
+		String patron = "O**?O";
 		PatternMatching a = new PatternMatching(texto);
 		a.checkPattern(patron);
 		boolean[][] res = a.resultado;
