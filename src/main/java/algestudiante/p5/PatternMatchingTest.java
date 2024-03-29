@@ -24,12 +24,17 @@ public class PatternMatchingTest {
 	public void test1() {
 		loadData("src/main/java/algestudiante/p5/test1.txt");		
 		PatternMatching patternMatching = new PatternMatching(text);		
+		System.out.println("Texto: " + patternMatching.texto);
+		
 		for (int i = 0; i < patterns.size(); i++) {			
 			patternMatching.checkPattern(patterns.get(i));
+			System.out.println("Patron: " + patterns.get(i));
 			assertEquals(expectedResults.get(i), patternMatching.checkPattern(patterns.get(i)));
-			patternMatching.printsTable();	
+			patternMatching.printsTable();
+			System.out.println("-------------------------------------------------");
 		}
 	}
+	
 	
 	@Test
 	public void test2() {
@@ -38,7 +43,8 @@ public class PatternMatchingTest {
 		for (int i = 0; i < patterns.size(); i++) {			
 			assertEquals(expectedResults.get(i), 
 					patternMatching.checkPattern(patterns.get(i)));
-			patternMatching.printsTable();	
+			patternMatching.printsTable();
+			System.out.println("-------------------------------------------------");
 		}
 	}
 	
@@ -49,8 +55,10 @@ public class PatternMatchingTest {
 		for (int i = 0; i < patterns.size(); i++) {			
 			assertEquals(expectedResults.get(i), patternMatching.checkPattern(patterns.get(i)));
 			patternMatching.printsTable();	
+			System.out.println("-------------------------------------------------");
 		}
 	}
+	
 
 	private void loadData(String file) {
 		BufferedReader reader = null;
