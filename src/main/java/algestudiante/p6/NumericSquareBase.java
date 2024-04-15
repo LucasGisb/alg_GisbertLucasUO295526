@@ -49,10 +49,10 @@ public class NumericSquareBase{
 	
 	//esquema mejor backtracking
 	public void backtracking(int nivel, int i, int j) {
-		if(i == sizeNum && esSolucion(nivel, i, j)) {  //ya se ha llenado
+		if(esSolucion(i, j)) {  //ya se ha llenado y se cumplen las condiciones
 			//dentro miramos si las columnas tambien son validas
 			solEncontrada = true;
-			
+			establecerEstadoSolucion();
 		}else {
 			if(cuadradoComplejo[i][j].equals("?")) {
 				for (int k = 0; k < 10; k++) {
@@ -76,6 +76,14 @@ public class NumericSquareBase{
 	}
 	
 	
+	private void establecerEstadoSolucion() {
+		for (int i = 0; i < casillasRellenas.length; i++) {
+			for (int j = 0; j < casillasRellenas[0].length; j++) {
+				estadoSolucionEncontrada[i][j] = cuadradoComplejo[i][j];
+			}
+		}
+	}
+
 	private boolean esValido(int fila, int colum) {
 		//Comprobamos la fila
 		for (int k = colum; k < cuadradoComplejo[0].length - 2; k++) {
@@ -93,6 +101,9 @@ public class NumericSquareBase{
 				acum = acum * Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
 				break;
 			case("/"):
+				if(Integer.valueOf(cuadradoComplejo[fila][k+1]) == 0) { //caso dividir entre 0
+					return false;
+				}
 				acum = acum / Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
 				break;	
 			}
@@ -152,21 +163,78 @@ public class NumericSquareBase{
 		res[0] = filaActual;
 		res[1] = columnaActual;
 		
-		if(filaActual>=sizeNum) { //caso de que nos hayamos pasado, por ende llegado al final. Devolvemos la misma que el param?
-			res[0] = sizeNum - 1;
-			res[1] = sizeNum - 1;
+		/*
+		 * if(filaActual>=sizeNum) { //caso de que nos hayamos pasado, por ende llegado al final. Volvemos a empezar?
+		 
+			res[0] = 0;
+			res[1] = 0;
+		}*/
+		if(filaActual>=sizeNum) {
+			esValido(filaActual, columnaActual);
 		}
-		
 		
 		return res;
 	}
 
 	
-	public boolean esSolucion(int nivel, int iP, int jP) {
-		if(esValido(iP, jP)) {
-			return true;
-		}
-		return false;
+	public boolean esSolucion(int fila, int colum) {
+		//Comprobamos la fila
+		for (int k = colum; k < cuadradoComplejo[0].length - 2; k++) {
+			if(cuadradoComplejo[fila][k].equals("?")) {
+				return false;
+			}
+		}		
+		
+		int acum = Integer.valueOf(cuadradoComplejo[fila][0]);
+				for (int k = 1; k < cuadradoComplejo[0].length - 2; k = k+2) { //vamos recorriendo los operadores (este -2 para evitar el = y el resultado)
+					switch(cuadradoComplejo[fila][k]) {
+					case("+"):
+						acum = acum + Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
+						break;
+					case("*"):
+						acum = acum * Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
+						break;
+					case("/"):
+						if(Integer.valueOf(cuadradoComplejo[fila][k+1]) == 0) { //caso dividir entre 0
+							return false;
+						}
+						acum = acum / Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
+						break;	
+					}
+					if(acum != Integer.valueOf(cuadradoComplejo[fila][cuadradoComplejo[0].length-1])) {
+						return false;
+					}
+				}
+				
+				
+				//Comprobamos la columna
+				for (int k = fila; k < cuadradoComplejo.length - 2; k++) {
+					if(cuadradoComplejo[k][colum].equals("?")) {
+						return false;
+					}
+				}
+				int acumC = Integer.valueOf(cuadradoComplejo[0][colum]);
+				for (int k = 1; k < cuadradoComplejo.length - 2; k = k+2) { //vamos recorriendo los operadores (este -2 para evitar el = y el resultado)
+					switch(cuadradoComplejo[k][colum]) {
+					case("+"):
+						acumC = acumC + Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
+						break;
+					case("*"):
+						acumC = acumC * Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
+						break;
+					case("/"):
+						if(Integer.valueOf(cuadradoComplejo[k+1][colum]) == 0) { //asi evito que divida entre 0
+							return false;
+						}
+						acumC = acumC / Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
+						break;	
+					}
+					if(acumC != Integer.valueOf(cuadradoComplejo[cuadradoComplejo.length-1][colum])) {
+						return false;
+					}
+				}
+				
+				return true;
 	}
 	
 	public String[][] getSol() {
