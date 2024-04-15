@@ -7,6 +7,7 @@ public class NumericSquareBase{
 	
 	//forma mejor?
 	static String[][] cuadradoComplejo; //que en pos pares tenga los numeros/? y en las impares las operaciones
+	static int size;
 	static int sizeNum;
 	//tambiem habrian casillas (las diagonales) que serian huecos
 	
@@ -29,7 +30,9 @@ public class NumericSquareBase{
 				cuadradoComplejo[i][j] = table[i][j];
 			}
 		}
-		this.sizeNum = cuadradoComplejo.length/2;
+		this.size = cuadradoComplejo.length;
+		this.sizeNum = size - 2;
+		
 		/*
 		for (int i = 0; i < cuadradoComplejo.length; i++) {
 			resOperacionCadaFila[i] = cuadradoComplejo[i][cuadradoComplejo[0].length];
@@ -51,11 +54,7 @@ public class NumericSquareBase{
 			solEncontrada = true;
 			
 		}else {
-			if(esValido(i, j)) {
-				//llamada a backtracking con nivel+1, nextPosition[0] y nextPosition[1] (estas son las coordenadas i j de la siguiente posicion)
-				int[] posSig = getSigCasillaLibre(i, j); //pasandole la pos actual (va recorriendo de dos en dos por las columnas, cuidado con no saltarse)
-				backtracking(nivel+1, posSig[0], posSig[1]);
-			}else {
+			if(cuadradoComplejo[i][j].equals("?")) {
 				for (int k = 0; k < 10; k++) {
 					if(!solEncontrada) {
 						cuadradoComplejo[i][j] = "" + k;  //rellenemos la actual
@@ -67,7 +66,11 @@ public class NumericSquareBase{
 						}
 					}
 				}
+			}else {
+				int[] posSig = getSigCasillaLibre(i, j);
+				backtracking(nivel+1, posSig[0], posSig[1]);
 			}
+			
 			
 		}
 	}
@@ -75,7 +78,7 @@ public class NumericSquareBase{
 	
 	private boolean esValido(int fila, int colum) {
 		//Comprobamos la fila
-		for (int k = colum; k < cuadradoComplejo[0].length; k++) {
+		for (int k = colum; k < cuadradoComplejo[0].length - 2; k++) {
 			if(cuadradoComplejo[fila][k].equals("?")) {
 				return true;
 			}
@@ -93,14 +96,14 @@ public class NumericSquareBase{
 				acum = acum / Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
 				break;	
 			}
-			if(acum != Integer.valueOf(cuadradoComplejo[fila][cuadradoComplejo[0].length])) {
+			if(acum != Integer.valueOf(cuadradoComplejo[fila][cuadradoComplejo[0].length-1])) {
 				return false;
 			}
 		}
 		
 		
 		//Comprobamos la columna
-		for (int k = fila; k < cuadradoComplejo.length; k++) {
+		for (int k = fila; k < cuadradoComplejo.length - 2; k++) {
 			if(cuadradoComplejo[k][colum].equals("?")) {
 				return true;
 			}
@@ -115,10 +118,13 @@ public class NumericSquareBase{
 				acumC = acumC * Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
 				break;
 			case("/"):
+				if(Integer.valueOf(cuadradoComplejo[k+1][colum]) == 0) { //asi evito que divida entre 0
+					return false;
+				}
 				acumC = acumC / Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
 				break;	
 			}
-			if(acumC != Integer.valueOf(cuadradoComplejo[cuadradoComplejo.length][colum])) {
+			if(acumC != Integer.valueOf(cuadradoComplejo[cuadradoComplejo.length-1][colum])) {
 				return false;
 			}
 		}
@@ -132,18 +138,26 @@ public class NumericSquareBase{
 		
 		do
 		 {
-		columnaActual = columnaActual + 1;
-		 if (columnaActual == nivel)	//caso de que hayamos llegado a la ultima columna de la fila, pasamos a la fila siguiente desde la pos 0
-		  {
-			 filaActual = filaActual+1;
-			 columnaActual = 0;
-		  }
-		 cond = (filaActual==nivel) || cuadradoComplejo[filaActual][columnaActual].equals("?");  //reestablecemos la condicion para ver si seguimos iterando
+			columnaActual = columnaActual + 2;
+			 if (columnaActual >= sizeNum)	//caso de que hayamos llegado a la ultima columna de la fila, pasamos a la fila siguiente desde la pos 0
+			  {
+				 filaActual = filaActual+2;
+				 columnaActual = 0;
+			  }
+			 cond = (filaActual>=sizeNum) || cuadradoComplejo[filaActual][columnaActual].equals("?");  //reestablecemos la condicion para ver si seguimos iterando
 		 }
 		while (!cond);
+		
 		//asignamos los resultados x y
 		res[0] = filaActual;
 		res[1] = columnaActual;
+		
+		if(filaActual>=sizeNum) { //caso de que nos hayamos pasado, por ende llegado al final. Devolvemos la misma que el param?
+			res[0] = sizeNum - 1;
+			res[1] = sizeNum - 1;
+		}
+		
+		
 		return res;
 	}
 
