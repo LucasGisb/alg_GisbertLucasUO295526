@@ -3,27 +3,18 @@ package algestudiante.p6;
 //public class NumericSquareBase extends NumericSquare{
 public class NumericSquareBase{
 
-	static int nivel;
+	private int nivel;
 	
-	//forma mejor?
-	static String[][] cuadradoComplejo; //que en pos pares tenga los numeros/? y en las impares las operaciones
-	static int size;
-	static int sizeNum;
-	//tambiem habrian casillas (las diagonales) que serian huecos
+	private String[][] cuadradoComplejo; //que en pos pares tenga los numeros/? y en las impares las operaciones
+	private int size;
+	private int sizeNum;
+	private int sizeRes;
 	
-	static boolean[][] casillasRellenas; //true si hay numero
+	private boolean solEncontrada = false;
+	private String[][] estadoSolucionEncontrada; //solo se llena al encontrarse una solucion, siendo una copia del tablero ante esta solucion
 	
-	static String[] resOperacionCadaFila;
-	static String[] resOperacionCadaColumna;  //podria usarme uno bidimensional para ambos
-	
-	static boolean solEncontrada = false;
-	static String[][] estadoSolucionEncontrada; //solo se llena al encontrarse una solucion, siendo una copia del tablero ante esta solucion
-			//para el caso de multiples soluciones, hacerlos un array de String[][] que almacene todas las soluciones encontradas
-	//public NumericSquareBase(String[][] table) {	
-	//}
 	
 	public NumericSquareBase(String[][] table) {
-		//this.cuadradoComplejo = table;
 		this.cuadradoComplejo = new String[table.length][table[0].length];
 		for (int i = 0; i < table.length; i++) {
 			for (int j = 0; j < table[0].length; j++) {
@@ -32,53 +23,47 @@ public class NumericSquareBase{
 		}
 		this.size = cuadradoComplejo.length;
 		this.sizeNum = size - 2;
-		
-		/*
-		for (int i = 0; i < cuadradoComplejo.length; i++) {
-			resOperacionCadaFila[i] = cuadradoComplejo[i][cuadradoComplejo[0].length];
-		}
-		for (int j = 0; j < cuadradoComplejo[0].length; j++) {
-			resOperacionCadaFila[j] = cuadradoComplejo[cuadradoComplejo.length][cuadradoComplejo[0].length];
-		}
-		*/
+		this.sizeRes = size/2;
 	}
 
 	public void backtracking() { //
-		backtracking(-1, 0, 0);
+		if(cuadradoComplejo[0][0].equals("?")) { //caso el primero ya sea un ?, habra que rellenarlo
+			backtracking(-1, 0, 0);
+		}else { //caso de que haya un valor preestablecido en la primera casilla, iniciaremos desde el primer ?
+			int[] inicio = getSigCasillaLibre(0, 0);
+			backtracking(-1, inicio[0], inicio[1]);
+		}
 	}
 	
-	//esquema mejor backtracking
-	public void backtracking(int nivel, int i, int j) {
-		if(esSolucion(i, j)) {  //ya se ha llenado y se cumplen las condiciones
-			//dentro miramos si las columnas tambien son validas
-			solEncontrada = true;
-			establecerEstadoSolucion();
-		}else {
-			if(cuadradoComplejo[i][j].equals("?")) {
-				for (int k = 0; k < 10; k++) {
-					if(!solEncontrada) {
-						cuadradoComplejo[i][j] = "" + k;  //rellenemos la actual
-						int[] posSig = getSigCasillaLibre(i, j); //pasandole la pos actual (va recorriendo de dos en dos por las columnas, cuidado con no saltarse)
-						//if(esValido(posSig[0], posSig[1], i)) { //si se completo, si es valido lo puesto:  isValid(nextPosition[0] y nextPosition[1], i) esta i siendo la fila en la que se ha asignado
-						if(esValido(posSig[0], posSig[1])) {
-							//llamada a backtracking con nivel+1, nextPosition[0] y nextPosition[1] (estas son las coordenadas i j de la siguiente posicion)
-							backtracking(nivel+1, posSig[0], posSig[1]);
-						}
-					}
-				}
-			}else {
-				int[] posSig = getSigCasillaLibre(i, j);
-				backtracking(nivel+1, posSig[0], posSig[1]);
+	
+	private void backtracking(int nivel, int i, int j) {
+		if(i>=sizeNum) {
+			if(esSolucionValida()) {
+				solEncontrada = true;
+				establecerEstadoSolucion();
 			}
-			
-			
+		}else {
+			int[] posSig = getSigCasillaLibre(i, j);
+			for (int k = 0; k < 10; k++) {
+				if(!solEncontrada) {
+					cuadradoComplejo[i][j] = "" + k;  //rellenemos la actual
+					
+					if(esFilaValida(i, j)) {  //comprobacion para ahorrar muchisimos casos perdidos
+						backtracking(nivel+1, posSig[0], posSig[1]);
+					}
+					
+					//backtracking(nivel+1, posSig[0], posSig[1]);
+				}
+			}
+			cuadradoComplejo[i][j] = "?"; //reseteamos la casilla
 		}
 	}
 	
 	
 	private void establecerEstadoSolucion() {
-		for (int i = 0; i < casillasRellenas.length; i++) {
-			for (int j = 0; j < casillasRellenas[0].length; j++) {
+		estadoSolucionEncontrada = new String[cuadradoComplejo.length][cuadradoComplejo[0].length];
+		for (int i = 0; i < cuadradoComplejo.length; i++) {
+			for (int j = 0; j < cuadradoComplejo[0].length; j++) {
 				estadoSolucionEncontrada[i][j] = cuadradoComplejo[i][j];
 			}
 		}
@@ -96,6 +81,9 @@ public class NumericSquareBase{
 			switch(cuadradoComplejo[fila][k]) {
 			case("+"):
 				acum = acum + Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
+				break;
+			case("-"):
+				acum = acum - Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
 				break;
 			case("*"):
 				acum = acum * Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
@@ -124,6 +112,78 @@ public class NumericSquareBase{
 			switch(cuadradoComplejo[k][colum]) {
 			case("+"):
 				acumC = acumC + Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
+				break;
+			case("-"):
+				acumC = acumC - Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
+				break;
+			case("*"):
+				acumC = acumC * Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
+				break;
+			case("/"):
+				if(Integer.valueOf(cuadradoComplejo[k+1][colum]) == 0) { //asi evito que divida entre 0
+					return false;
+				}
+				acumC = acumC / Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
+				break;	
+			}
+			if(acumC != Integer.valueOf(cuadradoComplejo[cuadradoComplejo.length-1][colum])) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private boolean esFilaValida(int fila, int colum) {
+		//Comprobamos la fila
+		for (int k = colum; k < cuadradoComplejo[0].length - 2; k++) {
+			if(cuadradoComplejo[fila][k].equals("?")) {
+				return true;
+			}
+		}
+		int acum = Integer.valueOf(cuadradoComplejo[fila][0]);
+		for (int k = 1; k < cuadradoComplejo[0].length - 2; k = k+2) { //vamos recorriendo los operadores (este -2 para evitar el = y el resultado)
+			switch(cuadradoComplejo[fila][k]) {
+			case("+"):
+				acum = acum + Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
+				break;
+			case("-"):
+				acum = acum - Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
+				break;
+			case("*"):
+				acum = acum * Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
+				break;
+			case("/"):
+				if(Integer.valueOf(cuadradoComplejo[fila][k+1]) == 0) { //asi evito que divida entre 0
+					return false;
+				}
+				acum = acum / Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
+				break;	
+			}
+		}
+		if(acum != Integer.valueOf(cuadradoComplejo[fila][cuadradoComplejo[0].length-1])) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	private boolean esColumnaValida(int fila, int colum) {
+		//Comprobamos la columna
+		for (int k = fila; k < cuadradoComplejo.length - 2; k++) {
+			if(cuadradoComplejo[k][colum].equals("?")) {
+				return true;
+			}
+		}
+		int acumC = Integer.valueOf(cuadradoComplejo[0][colum]);
+		for (int k = 1; k < cuadradoComplejo.length - 2; k = k+2) { //vamos recorriendo los operadores (este -2 para evitar el = y el resultado)
+			switch(cuadradoComplejo[k][colum]) {
+			case("+"):
+				acumC = acumC + Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
+				break;
+			case("-"):
+				acumC = acumC - Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
 				break;
 			case("*"):
 				acumC = acumC * Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
@@ -163,78 +223,81 @@ public class NumericSquareBase{
 		res[0] = filaActual;
 		res[1] = columnaActual;
 		
-		/*
-		 * if(filaActual>=sizeNum) { //caso de que nos hayamos pasado, por ende llegado al final. Volvemos a empezar?
-		 
-			res[0] = 0;
-			res[1] = 0;
-		}*/
-		if(filaActual>=sizeNum) {
-			esValido(filaActual, columnaActual);
-		}
-		
 		return res;
 	}
 
 	
 	public boolean esSolucion(int fila, int colum) {
 		//Comprobamos la fila
-		for (int k = colum; k < cuadradoComplejo[0].length - 2; k++) {
+		for (int k = colum; k < cuadradoComplejo[0].length - 2; k = k+2) {
 			if(cuadradoComplejo[fila][k].equals("?")) {
 				return false;
 			}
 		}		
+		for (int k = fila; k < cuadradoComplejo.length - 2; k = k+2) {
+			if(cuadradoComplejo[k][colum].equals("?")) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
+	public boolean esSolucionValida() {
+		for (int i = 0; i < cuadradoComplejo.length -2 ; i = i+2) {
+			if(!esSolucionValida(i, i)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean esSolucionValida(int fila, int colum) {
 		
 		int acum = Integer.valueOf(cuadradoComplejo[fila][0]);
-				for (int k = 1; k < cuadradoComplejo[0].length - 2; k = k+2) { //vamos recorriendo los operadores (este -2 para evitar el = y el resultado)
-					switch(cuadradoComplejo[fila][k]) {
-					case("+"):
-						acum = acum + Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
-						break;
-					case("*"):
-						acum = acum * Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
-						break;
-					case("/"):
-						if(Integer.valueOf(cuadradoComplejo[fila][k+1]) == 0) { //caso dividir entre 0
-							return false;
-						}
-						acum = acum / Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
-						break;	
-					}
-					if(acum != Integer.valueOf(cuadradoComplejo[fila][cuadradoComplejo[0].length-1])) {
+		int acumC = Integer.valueOf(cuadradoComplejo[0][colum]);
+		
+		for (int k = 1; k < cuadradoComplejo[0].length - 2; k = k+2) { //vamos recorriendo los operadores (este -2 para evitar el = y el resultado)
+			switch(cuadradoComplejo[fila][k]) {
+				case("+"):
+					acum = acum + Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
+					break;
+				case("-"):
+					acum = acum - Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
+					break;
+				case("*"):
+					acum = acum * Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
+					break;
+				case("/"):
+					if(Integer.valueOf(cuadradoComplejo[fila][k+1]) == 0) { //caso dividir entre 0
 						return false;
 					}
+					acum = acum / Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
+					break;	
+			}
+			switch(cuadradoComplejo[k][colum]) {
+			case("+"):
+				acumC = acumC + Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
+				break;
+			case("-"):
+				acumC = acumC - Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
+				break;
+			case("*"):
+				acumC = acumC * Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
+				break;
+			case("/"):
+				if(Integer.valueOf(cuadradoComplejo[k+1][colum]) == 0) { //asi evito que divida entre 0
+					return false;
 				}
+				acumC = acumC / Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
+				break;	
+			}
+		}
+		if(acum != Integer.valueOf(cuadradoComplejo[fila][cuadradoComplejo[0].length-1]) || acumC != Integer.valueOf(cuadradoComplejo[cuadradoComplejo.length-1][colum])) {
+			return false;
+		}
 				
-				
-				//Comprobamos la columna
-				for (int k = fila; k < cuadradoComplejo.length - 2; k++) {
-					if(cuadradoComplejo[k][colum].equals("?")) {
-						return false;
-					}
-				}
-				int acumC = Integer.valueOf(cuadradoComplejo[0][colum]);
-				for (int k = 1; k < cuadradoComplejo.length - 2; k = k+2) { //vamos recorriendo los operadores (este -2 para evitar el = y el resultado)
-					switch(cuadradoComplejo[k][colum]) {
-					case("+"):
-						acumC = acumC + Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
-						break;
-					case("*"):
-						acumC = acumC * Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
-						break;
-					case("/"):
-						if(Integer.valueOf(cuadradoComplejo[k+1][colum]) == 0) { //asi evito que divida entre 0
-							return false;
-						}
-						acumC = acumC / Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
-						break;	
-					}
-					if(acumC != Integer.valueOf(cuadradoComplejo[cuadradoComplejo.length-1][colum])) {
-						return false;
-					}
-				}
-				
-				return true;
+		return true;
 	}
 	
 	public String[][] getSol() {

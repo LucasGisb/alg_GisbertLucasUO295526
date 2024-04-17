@@ -13,6 +13,7 @@ public class NumericSquareTestOne {
 	private static String PATH= "src/main/java/algestudiante/p6/";
 	private String[][] table;
 	
+	
 	@Test
 	public void test0() {
 		loadData(PATH+"test00.txt"); //carga en table el tablero generado en base al fichero
@@ -25,6 +26,8 @@ public class NumericSquareTestOne {
 		printTable(tableSol,"Solution returned test00");
 		assertArrayEquals(convertNum(numericSquare.getSol()),solOk);
 	}
+	
+	
 	
 	@Test
 	public void test1() {
@@ -39,6 +42,8 @@ public class NumericSquareTestOne {
 		printTable(tableSol,"Solution returned test01");
 		assertArrayEquals(convertNum(numericSquare.getSol()),solOk);
 	}
+	
+	
 	
 	@Test
 	public void test2() {
@@ -55,6 +60,8 @@ public class NumericSquareTestOne {
 
 	}
 	
+	
+	
 	@Test
 	public void test3() {
 		loadData(PATH+"test03.txt");		
@@ -69,6 +76,7 @@ public class NumericSquareTestOne {
 		printTable(tableSol,"Solution returned test03");
 		assertArrayEquals(convertNum(numericSquare.getSol()),solOk);
 	}
+	
 	
 	@Test
 	public void test4() {
@@ -85,6 +93,7 @@ public class NumericSquareTestOne {
 		printTable(tableSol,"Solution returned test04");
 		assertArrayEquals(convertNum(numericSquare.getSol()),solOk);
 	}
+	
 	
 	@Test
 	public void test5() {
@@ -119,6 +128,7 @@ public class NumericSquareTestOne {
 		assertArrayEquals(convertNum(numericSquare.getSol()),solOk);
 	}
 	
+	
 	@Test
 	public void test7() {
 		loadData(PATH+"test07.txt");		
@@ -135,6 +145,7 @@ public class NumericSquareTestOne {
 		printTable(tableSol,"Solution returned test07");
 		assertArrayEquals(convertNum(numericSquare.getSol()),solOk);
 	}
+	
 
 	/**
 	 * Load data from file and store in array with operations and results
