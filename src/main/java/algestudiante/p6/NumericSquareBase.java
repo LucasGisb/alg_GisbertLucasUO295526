@@ -1,7 +1,7 @@
 package algestudiante.p6;
 
 //public class NumericSquareBase extends NumericSquare{
-public class NumericSquareBase{
+public class NumericSquareBase extends NumericSquare{
 
 	private int nivel;
 	
@@ -15,6 +15,7 @@ public class NumericSquareBase{
 	
 	
 	public NumericSquareBase(String[][] table) {
+		super(table);
 		this.cuadradoComplejo = new String[table.length][table[0].length];
 		for (int i = 0; i < table.length; i++) {
 			for (int j = 0; j < table[0].length; j++) {
