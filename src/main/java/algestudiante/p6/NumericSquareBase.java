@@ -93,6 +93,9 @@ public class NumericSquareBase extends NumericSquare{
 				if(Integer.valueOf(cuadradoComplejo[fila][k+1]) == 0) { //caso dividir entre 0
 					return false;
 				}
+				if(acum % Integer.valueOf(cuadradoComplejo[fila][k+1]) > 0) {
+					return false;
+				}
 				acum = acum / Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
 				break;	
 			}
@@ -124,6 +127,10 @@ public class NumericSquareBase extends NumericSquare{
 				if(Integer.valueOf(cuadradoComplejo[k+1][colum]) == 0) { //asi evito que divida entre 0
 					return false;
 				}
+				if(acumC % Integer.valueOf(cuadradoComplejo[k+1][colum]) > 0) {
+					return false;
+				}
+				//else if si resto es > 0 devuelve false
 				acumC = acumC / Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
 				break;	
 			}
@@ -156,6 +163,9 @@ public class NumericSquareBase extends NumericSquare{
 				break;
 			case("/"):
 				if(Integer.valueOf(cuadradoComplejo[fila][k+1]) == 0) { //asi evito que divida entre 0
+					return false;
+				}
+				if(acum % Integer.valueOf(cuadradoComplejo[fila][k+1]) > 0) {
 					return false;
 				}
 				acum = acum / Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
@@ -191,6 +201,9 @@ public class NumericSquareBase extends NumericSquare{
 				break;
 			case("/"):
 				if(Integer.valueOf(cuadradoComplejo[k+1][colum]) == 0) { //asi evito que divida entre 0
+					return false;
+				}
+				if(acumC % Integer.valueOf(cuadradoComplejo[k+1][colum]) > 0) {
 					return false;
 				}
 				acumC = acumC / Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
@@ -273,6 +286,9 @@ public class NumericSquareBase extends NumericSquare{
 					if(Integer.valueOf(cuadradoComplejo[fila][k+1]) == 0) { //caso dividir entre 0
 						return false;
 					}
+					if(acum % Integer.valueOf(cuadradoComplejo[fila][k+1]) > 0) {
+						return false;
+					}
 					acum = acum / Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
 					break;	
 			}
@@ -288,6 +304,9 @@ public class NumericSquareBase extends NumericSquare{
 				break;
 			case("/"):
 				if(Integer.valueOf(cuadradoComplejo[k+1][colum]) == 0) { //asi evito que divida entre 0
+					return false;
+				}
+				if(acum % Integer.valueOf(cuadradoComplejo[k+1][colum]) > 0) {
 					return false;
 				}
 				acumC = acumC / Integer.valueOf(cuadradoComplejo[k+1][colum]) ;

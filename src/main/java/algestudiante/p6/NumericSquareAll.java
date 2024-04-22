@@ -204,7 +204,7 @@ public class NumericSquareAll extends NumericSquare{
 
 	@Override
 	public String[][] getSol() {
-		return this.estadosSolucionEncontrada.get(numSolucionesEncontradas-1); //devuelve la ultima encontrada
+		return this.estadosSolucionEncontrada.get(0); //devuelve la primera encontrada
 		
 	}
 
