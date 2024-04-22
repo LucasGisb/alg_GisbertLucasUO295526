@@ -15,7 +15,6 @@ public class TiemposBacktracking {
 	
 	public static void main (String arg []) {
 		long t1,t2;
-		int repes= Integer.valueOf(arg[0]);
 	
 		loadData(PATH+"test06.txt"); //carga en table el tablero generado en base al fichero
 		NumericSquareAll numericSquare = new NumericSquareAll(table);

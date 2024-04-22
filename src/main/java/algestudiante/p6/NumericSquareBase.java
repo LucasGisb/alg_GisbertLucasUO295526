@@ -69,78 +69,6 @@ public class NumericSquareBase extends NumericSquare{
 			}
 		}
 	}
-
-	private boolean esValido(int fila, int colum) {
-		//Comprobamos la fila
-		for (int k = colum; k < cuadradoComplejo[0].length - 2; k++) {
-			if(cuadradoComplejo[fila][k].equals("?")) {
-				return true;
-			}
-		}
-		int acum = Integer.valueOf(cuadradoComplejo[fila][0]);
-		for (int k = 1; k < cuadradoComplejo[0].length - 2; k = k+2) { //vamos recorriendo los operadores (este -2 para evitar el = y el resultado)
-			switch(cuadradoComplejo[fila][k]) {
-			case("+"):
-				acum = acum + Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
-				break;
-			case("-"):
-				acum = acum - Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
-				break;
-			case("*"):
-				acum = acum * Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
-				break;
-			case("/"):
-				if(Integer.valueOf(cuadradoComplejo[fila][k+1]) == 0) { //caso dividir entre 0
-					return false;
-				}
-				if(acum % Integer.valueOf(cuadradoComplejo[fila][k+1]) > 0) {
-					return false;
-				}
-				acum = acum / Integer.valueOf(cuadradoComplejo[fila][k+1]) ;
-				break;	
-			}
-			if(acum != Integer.valueOf(cuadradoComplejo[fila][cuadradoComplejo[0].length-1])) {
-				return false;
-			}
-		}
-		
-		
-		//Comprobamos la columna
-		for (int k = fila; k < cuadradoComplejo.length - 2; k++) {
-			if(cuadradoComplejo[k][colum].equals("?")) {
-				return true;
-			}
-		}
-		int acumC = Integer.valueOf(cuadradoComplejo[0][colum]);
-		for (int k = 1; k < cuadradoComplejo.length - 2; k = k+2) { //vamos recorriendo los operadores (este -2 para evitar el = y el resultado)
-			switch(cuadradoComplejo[k][colum]) {
-			case("+"):
-				acumC = acumC + Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
-				break;
-			case("-"):
-				acumC = acumC - Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
-				break;
-			case("*"):
-				acumC = acumC * Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
-				break;
-			case("/"):
-				if(Integer.valueOf(cuadradoComplejo[k+1][colum]) == 0) { //asi evito que divida entre 0
-					return false;
-				}
-				if(acumC % Integer.valueOf(cuadradoComplejo[k+1][colum]) > 0) {
-					return false;
-				}
-				//else if si resto es > 0 devuelve false
-				acumC = acumC / Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
-				break;	
-			}
-			if(acumC != Integer.valueOf(cuadradoComplejo[cuadradoComplejo.length-1][colum])) {
-				return false;
-			}
-		}
-		
-		return true;
-	}
 	
 	private boolean esFilaValida(int fila, int colum) {
 		//Comprobamos la fila
@@ -306,7 +234,7 @@ public class NumericSquareBase extends NumericSquare{
 				if(Integer.valueOf(cuadradoComplejo[k+1][colum]) == 0) { //asi evito que divida entre 0
 					return false;
 				}
-				if(acum % Integer.valueOf(cuadradoComplejo[k+1][colum]) > 0) {
+				if(acumC % Integer.valueOf(cuadradoComplejo[k+1][colum]) > 0) {
 					return false;
 				}
 				acumC = acumC / Integer.valueOf(cuadradoComplejo[k+1][colum]) ;
