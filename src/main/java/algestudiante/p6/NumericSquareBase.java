@@ -2,7 +2,8 @@ package algestudiante.p6;
 
 //public class NumericSquareBase extends NumericSquare{
 public class NumericSquareBase extends NumericSquare{
-
+	
+	
 	private int nivel;
 	
 	private String[][] cuadradoComplejo; //que en pos pares tenga los numeros/? y en las impares las operaciones
