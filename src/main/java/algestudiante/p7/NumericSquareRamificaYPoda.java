@@ -1,10 +1,18 @@
 package algestudiante.p7;
 
+
+import static org.junit.Assert.assertArrayEquals;
+
+import static org.junit.Assert.assertEquals;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import org.junit.Test;
+
+import algestudiante.p6.NumericSquareAll;
 import algestudiante.util.RamificaYPoda;
 
 public class NumericSquareRamificaYPoda{
@@ -12,17 +20,131 @@ public class NumericSquareRamificaYPoda{
 	private static String PATH= "src/main/java/algestudiante/p6/";
 	private static String[][] table;
 
-	public static void main(String[] args) {
-		loadData(PATH+"test01.txt"); //carga en table el tablero generado en base al fichero
+	@Test
+	public void test00() {
+		loadData(PATH+"test00.txt"); //carga en table el tablero generado en base al fichero
 		
 		// Creamos una instancia para resolver el problema
 		RamificaYPoda problemaNumericSquare = new RamificaYPoda(false); 
 
 		// Ejecutamos el metodo que va recorriendo el espacio de soluciones con ramifica y poda
+		long t1 = System.currentTimeMillis();
+		problemaNumericSquare.ramificaYPoda(new EstadoNumericSquare(table)); 
+		long t2 = System.currentTimeMillis();
+
+	  	System.out.println ("Tiempo 00: "+(t2-t1));
+	}
+	
+	@Test
+	public void test01() {
+		loadData(PATH+"test01.txt"); //carga en table el tablero generado en base al fichero
+		
+		// Creamos una instancia para resolver el problema
+		long t1 = System.currentTimeMillis();
+		RamificaYPoda problemaNumericSquare = new RamificaYPoda(false); 
+
+		// Ejecutamos el metodo que va recorriendo el espacio de soluciones con ramifica y poda
 		problemaNumericSquare.ramificaYPoda(new EstadoNumericSquare(table)); 
 		
-		System.out.println("Soluci�n �ptima del problema $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		System.out.println(problemaNumericSquare.getMejorSolucion());
+		long t2 = System.currentTimeMillis();
+
+	  	System.out.println ("Tiempo 01: "+(t2-t1));
+	}
+	
+	@Test
+	public void test02() {
+		loadData(PATH+"test02.txt"); //carga en table el tablero generado en base al fichero
+		
+		// Creamos una instancia para resolver el problema
+		long t1 = System.currentTimeMillis();
+		RamificaYPoda problemaNumericSquare = new RamificaYPoda(false); 
+
+		// Ejecutamos el metodo que va recorriendo el espacio de soluciones con ramifica y poda
+		problemaNumericSquare.ramificaYPoda(new EstadoNumericSquare(table)); 
+		
+		long t2 = System.currentTimeMillis();
+
+	  	System.out.println ("Tiempo 02: "+(t2-t1));
+	}
+	
+	@Test
+	public void test03() {
+		loadData(PATH+"test03.txt"); //carga en table el tablero generado en base al fichero
+		
+		// Creamos una instancia para resolver el problema
+		long t1 = System.currentTimeMillis();
+		RamificaYPoda problemaNumericSquare = new RamificaYPoda(false); 
+
+		// Ejecutamos el metodo que va recorriendo el espacio de soluciones con ramifica y poda
+		problemaNumericSquare.ramificaYPoda(new EstadoNumericSquare(table)); 
+		
+		long t2 = System.currentTimeMillis();
+
+	  	System.out.println ("Tiempo 03: "+(t2-t1));
+	}
+	
+	@Test
+	public void test04() {
+		loadData(PATH+"test04.txt"); //carga en table el tablero generado en base al fichero
+		
+		// Creamos una instancia para resolver el problema
+		long t1 = System.currentTimeMillis();
+		RamificaYPoda problemaNumericSquare = new RamificaYPoda(false); 
+
+		// Ejecutamos el metodo que va recorriendo el espacio de soluciones con ramifica y poda
+		problemaNumericSquare.ramificaYPoda(new EstadoNumericSquare(table)); 
+		
+		long t2 = System.currentTimeMillis();
+
+	  	System.out.println ("Tiempo 04: "+(t2-t1));
+	}
+	
+	@Test
+	public void test05() {
+		loadData(PATH+"test05.txt"); //carga en table el tablero generado en base al fichero
+		
+		// Creamos una instancia para resolver el problema
+		long t1 = System.currentTimeMillis();
+		RamificaYPoda problemaNumericSquare = new RamificaYPoda(false); 
+
+		// Ejecutamos el metodo que va recorriendo el espacio de soluciones con ramifica y poda
+		problemaNumericSquare.ramificaYPoda(new EstadoNumericSquare(table)); 
+		
+		long t2 = System.currentTimeMillis();
+
+	  	System.out.println ("Tiempo 05: "+(t2-t1));
+	}
+	
+	@Test
+	public void test06() {
+		loadData(PATH+"test06.txt"); //carga en table el tablero generado en base al fichero
+		
+		// Creamos una instancia para resolver el problema
+		long t1 = System.currentTimeMillis();
+		RamificaYPoda problemaNumericSquare = new RamificaYPoda(false); 
+
+		// Ejecutamos el metodo que va recorriendo el espacio de soluciones con ramifica y poda
+		problemaNumericSquare.ramificaYPoda(new EstadoNumericSquare(table)); 
+		
+		long t2 = System.currentTimeMillis();
+
+	  	System.out.println ("Tiempo 06: "+(t2-t1));
+	}
+	
+	@Test
+	public void test07() {
+		loadData(PATH+"test07.txt"); //carga en table el tablero generado en base al fichero
+		
+		// Creamos una instancia para resolver el problema
+		long t1 = System.currentTimeMillis();
+		RamificaYPoda problemaNumericSquare = new RamificaYPoda(false); 
+
+		// Ejecutamos el metodo que va recorriendo el espacio de soluciones con ramifica y poda
+		problemaNumericSquare.ramificaYPoda(new EstadoNumericSquare(table)); 
+		
+		long t2 = System.currentTimeMillis();
+
+	  	System.out.println ("Tiempo 07: "+(t2-t1));
 	}
 
 	/**

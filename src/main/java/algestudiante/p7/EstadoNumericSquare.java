@@ -31,15 +31,15 @@ public class EstadoNumericSquare extends Estado {
 		idPadre = padre.getId();
 		this.n = padre.table.length;
 		
-		this.table= Arrays.copyOf(padre.table,n);
-		/*
+		//this.table= Arrays.copyOf(padre.table,n);
+		
 		table = new String[padre.table.length][padre.table[0].length];
 		for (int i = 0; i < padre.table.length; i++) {
 			for (int k = 0; k < padre.table[0].length; k++) {
 				table[i][k] = padre.table[i][k];
 			}
 		}
-		*/
+		
 		
 		
 		this.filaActual = x;
@@ -109,10 +109,12 @@ public class EstadoNumericSquare extends Estado {
 				Estado estadoHijos = new EstadoNumericSquare(this, valorK, hueco[0], hueco[1]); //rellenamos el siguiente hueco del hijo con 0,1,2,3,4...
 				listaHijos.add(estadoHijos);
 				
+				/*
 				if(RamificaYPoda.TRAZA) {
 					System.out.println("Nivel: "+profundidad+" - Hijo: "+j); //nivel, profu, hijo);
 					System.out.println(estadoHijos);//printeamos tablero
 				}
+				*/
 			}
 			
 		}

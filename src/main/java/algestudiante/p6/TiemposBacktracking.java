@@ -16,7 +16,7 @@ public class TiemposBacktracking {
 	public static void main (String arg []) {
 		long t1,t2;
 	
-		loadData(PATH+"test06.txt"); //carga en table el tablero generado en base al fichero
+		loadData(PATH+"test05.txt"); //carga en table el tablero generado en base al fichero
 		NumericSquareAll numericSquare = new NumericSquareAll(table);
 		
 		t1 = System.currentTimeMillis();
